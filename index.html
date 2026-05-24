@@ -643,6 +643,45 @@ footer{background:var(--night);color:rgba(255,255,255,.7);padding:var(--sp-9) 0 
   .tl-dot{left:18px}
   .foot-top{flex-direction:column;gap:var(--sp-6)}
 }
+@media(max-width:560px){
+  :root{--sp-11:74px;--sp-10:56px;--sp-9:52px;--sp-8:40px}
+  .wrap{padding:0 var(--sp-4)}
+  .shead h2{font-size:1.9rem}
+  .shead p{font-size:.94rem}
+  /* hero */
+  .hero{padding:var(--sp-11) var(--sp-4) var(--sp-8)}
+  .hero-scrim{background:radial-gradient(74% 56% at 50% 46%,
+    rgba(244,248,253,.9),rgba(244,248,253,.4) 74%,transparent)}
+  .hero-tag{font-size:.95rem;line-height:1.7}
+  .hero-cta{flex-direction:column;width:100%;gap:var(--sp-3)}
+  .hero-cta .btn{width:100%;justify-content:center}
+  .hero-stats{gap:8px;width:100%}
+  .hstat{flex:1 1 calc(50% - 8px);min-width:0;padding:var(--sp-4) var(--sp-3)}
+  .hstat .hn{font-size:1.85rem}
+  .scroll-cue{display:none}
+  /* integrated stack */
+  .app-win{width:248px;height:162px;left:-124px;top:-81px}
+  .aw-body{padding:14px}
+  .aw-name{font-size:1.15rem}
+  .aw-glyph{font-size:1.9rem}
+  .stack-head h2{font-size:1.85rem}
+  .stack-head p{font-size:.9rem}
+  .stack-count b{font-size:2rem}
+  /* comparison table — horizontal scroll on phones */
+  #replaces .reveal-z{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .cmp{min-width:560px}
+  /* ecosystem cards full width */
+  .mod-card{width:100%;max-width:360px}
+  /* xr */
+  .xr-content{padding:var(--sp-5) var(--sp-4)}
+  .xr-rail{left:var(--sp-3);font-size:.58rem}
+  .xr-rail b{font-size:1.5rem}
+  .xr-progress{right:var(--sp-3)}
+  /* misc */
+  .lvl-card{padding:var(--sp-6) var(--sp-5)}
+  .cta-band{padding:var(--sp-8) var(--sp-5)}
+  .rev-hint{font-size:.6rem;gap:var(--sp-3)}
+}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
     transition-duration:.001ms!important;scroll-behavior:auto!important}
@@ -1431,11 +1470,12 @@ function initStack(){
   var N = wins.length;
   var SP = 560, BACK = 640, TOTAL = BACK + (N-1)*SP + 280;
 
+  var laneMob = window.innerWidth < 620;
   var lanes = wins.map(function(w,i){
     var side = (i%2) ? 1 : -1;
     return {
-      x: side*(150 + (i%3)*78),
-      y: -44 + (i%4)*32,
+      x: side*((laneMob?38:150) + (i%3)*(laneMob?20:78)),
+      y: (laneMob?-28:-44) + (i%4)*(laneMob?18:32),
       ph: i*1.7
     };
   });
@@ -1503,7 +1543,7 @@ function initHero3D(){
   try{
     renderer = new T.WebGLRenderer({canvas:canvas, alpha:true, antialias:true, powerPreference:'high-performance'});
   }catch(err){ return; }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, window.innerWidth<620?1.5:2));
 
   var scene = new T.Scene();
   var camera = new T.PerspectiveCamera(46, 1, 0.1, 260);
@@ -1553,7 +1593,7 @@ function initHero3D(){
   grid.material.transparent = true; grid.material.opacity = 0;
   world.add(grid);
 
-  var pc = 170, pg = new T.BufferGeometry(), parr = new Float32Array(pc*3);
+  var pc = (window.innerWidth<620?90:170), pg = new T.BufferGeometry(), parr = new Float32Array(pc*3);
   for(var p=0;p<pc;p++){
     parr[p*3]=(Math.random()-0.5)*46; parr[p*3+1]=(Math.random()-0.5)*30; parr[p*3+2]=(Math.random()-0.5)*32;
   }
@@ -1598,6 +1638,7 @@ function initHero3D(){
     var r = canvas.getBoundingClientRect();
     if(r.width===0||r.height===0) return;
     renderer.setSize(r.width,r.height,false);
+    camera.fov = window.innerWidth < 620 ? 58 : 46;
     camera.aspect = r.width/r.height; camera.updateProjectionMatrix();
   }
   window.addEventListener('resize', resize); resize();
@@ -1639,11 +1680,15 @@ function initHero3D(){
     bMatStruct.opacity = 0.82*bFade*(1-scrollN*0.55);
     bMatCable.opacity = 0.62*bFade*(1-scrollN*0.55);
     bridge.rotation.y = reduceMotion?0:Math.sin(t*0.13)*0.2;
-    /* building parked left — gentle parallax, no orbit across the content */
-    camera.position.x = mx*2.4;
+    /* compose for viewport — building + bridge framed wide on desktop,
+       pulled in as a centred backdrop on phones */
+    var mob = window.innerWidth < 620;
+    world.position.x = mob ? -2.5 : -11;
+    bridge.position.x = mob ? 6 : 12;
+    camera.position.x = mx*(mob ? 1.2 : 2.4);
     camera.position.y = 3.4 - my*1.5 + scrollN*3.2;
-    camera.position.z = 18.5;
-    camera.lookAt(0, scrollN*1.2, 0);
+    camera.position.z = mob ? 22 : 18.5;
+    camera.lookAt(mob ? 1.4 : 0, scrollN*1.2, 0);
     renderer.render(scene,camera);
     raf = requestAnimationFrame(frame);
   }
@@ -1940,7 +1985,7 @@ function initXRScene(){
   var T = window.THREE, renderer;
   try{ renderer = new T.WebGLRenderer({canvas:canvas, alpha:true, antialias:true}); }
   catch(e){ return; }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,window.innerWidth<620?1.5:2));
   var scene = new T.Scene();
   var camera = new T.PerspectiveCamera(62,1,0.1,440);
   var tunnel = new T.Group(); scene.add(tunnel);
@@ -1975,7 +2020,7 @@ function initXRScene(){
     tunnel.add(ring); frames.push(ring);
   }
   var debris = [];
-  for(var d=0;d<10;d++){
+  for(var d=0;d<(window.innerWidth<620?6:10);d++){
     var dgeo = (d%2) ? new T.OctahedronGeometry(0.66,0) : new T.BoxGeometry(0.95,0.95,0.95);
     var m = fatWire(dgeo, 0.045);
     m.position.set((Math.random()-0.5)*15,(Math.random()-0.5)*15,-Math.random()*DEPTH);
