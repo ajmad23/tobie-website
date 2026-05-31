@@ -391,18 +391,24 @@ nav.scrolled .nav-brand .brand-logo{height:26px}
 .rl-slate span{color:#475569} .rl-slate::before,.rl-slate::after{background:linear-gradient(90deg,transparent,rgba(71,85,105,.3))}
 .eco-ring{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--sp-4);perspective:1300px}
 .mod-card{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-md);
-  padding:var(--sp-5);width:236px;box-shadow:var(--el-1);position:relative;overflow:hidden;
+  padding:var(--sp-4) var(--sp-5);width:200px;box-shadow:var(--el-1);position:relative;overflow:hidden;
   transition:transform var(--dur-3) var(--ease-out),box-shadow var(--dur-3) var(--ease-out),
-    border-color var(--dur-3) var(--ease-out);will-change:transform;transform-style:preserve-3d}
+    border-color var(--dur-3) var(--ease-out);will-change:transform;transform-style:preserve-3d;cursor:pointer}
 .mod-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.mod-card:hover{box-shadow:var(--el-3);border-color:var(--line-2)}
-.mod-ic{font-size:1.45rem;margin-bottom:var(--sp-3);display:inline-flex;width:44px;height:44px;
+.mod-card:hover{box-shadow:var(--el-3);border-color:var(--line-2);transform:translateY(-2px)}
+.mod-ic{font-size:1.45rem;margin-bottom:var(--sp-2);display:inline-flex;width:44px;height:44px;
   align-items:center;justify-content:center;border-radius:var(--r-xs);transform:translateZ(34px)}
 .mod-card h4{font-family:'Space Grotesk',sans-serif;font-size:.93rem;font-weight:600;
-  margin-bottom:var(--sp-1);display:flex;align-items:center;gap:6px;flex-wrap:wrap;transform:translateZ(22px)}
-.mod-card p{font-size:.76rem;color:var(--text-3);line-height:1.6;transform:translateZ(12px)}
+  margin-bottom:0;display:flex;align-items:center;gap:6px;flex-wrap:wrap;transform:translateZ(22px)}
+.mod-card p{font-size:.76rem;color:var(--text-3);line-height:1.6;transform:translateZ(12px);
+  max-height:0;opacity:0;margin:0;overflow:hidden;
+  transition:max-height var(--dur-3) var(--ease-out),opacity var(--dur-2) var(--ease-out),margin var(--dur-3) var(--ease-out)}
+.mod-card:hover p,.mod-card:focus-within p{max-height:200px;opacity:1;margin-top:var(--sp-2)}
 .mod-tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.54rem;font-weight:600;
-  letter-spacing:.08em;padding:.2rem .5rem;border-radius:var(--r-pill);margin-top:var(--sp-3);transform:translateZ(18px)}
+  letter-spacing:.08em;padding:.2rem .5rem;border-radius:var(--r-pill);margin-top:0;transform:translateZ(18px);
+  max-height:0;opacity:0;overflow:hidden;
+  transition:max-height var(--dur-3) var(--ease-out),opacity var(--dur-2) var(--ease-out),margin var(--dur-3) var(--ease-out)}
+.mod-card:hover .mod-tag,.mod-card:focus-within .mod-tag{max-height:30px;opacity:1;margin-top:var(--sp-3)}
 .badge-built{font-family:'JetBrains Mono',monospace;font-size:.5rem;font-weight:600;
   padding:.12rem .42rem;border-radius:5px;letter-spacing:.06em;
   background:rgba(168,230,60,.2);color:#4d7c0f;border:1px solid rgba(168,230,60,.5)}
@@ -593,6 +599,24 @@ nav.scrolled .nav-brand .brand-logo{height:26px}
   font-weight:600;letter-spacing:-.02em;margin-bottom:var(--sp-3);position:relative}
 .cta-band p{color:rgba(255,255,255,.66);max-width:520px;margin:0 auto var(--sp-6);position:relative;font-size:.98rem}
 .cta-band .hero-cta{margin-bottom:0;position:relative}
+.cta-pill{display:inline-flex;align-items:center;gap:.5rem;position:relative;
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:#fff;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.18);padding:.4rem .85rem;border-radius:var(--r-pill);
+  margin-bottom:var(--sp-5)}
+.cta-pill .cta-dot{width:7px;height:7px;border-radius:50%;background:#a8e63c;
+  box-shadow:0 0 10px rgba(168,230,60,.8);animation:cta-pulse 1.8s ease-in-out infinite}
+@keyframes cta-pulse{0%,100%{opacity:1}50%{opacity:.45}}
+.cta-signup{position:relative;display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;
+  max-width:520px;margin:0 auto var(--sp-5)}
+.cta-signup input[type=email]{flex:1 1 260px;min-width:0;padding:.85rem 1.1rem;
+  font:inherit;font-size:.95rem;color:#fff;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.22);border-radius:var(--r-pill);outline:none;
+  transition:border-color var(--dur-2) var(--ease-out),background var(--dur-2) var(--ease-out)}
+.cta-signup input[type=email]::placeholder{color:rgba(255,255,255,.45)}
+.cta-signup input[type=email]:focus{border-color:rgba(255,255,255,.55);background:rgba(255,255,255,.14)}
+.cta-signup .btn{flex:0 0 auto}
+.cta-note{position:relative;color:#a8e63c;font-size:.88rem;margin:-.5rem auto var(--sp-5);max-width:520px}
 footer{background:var(--night);color:rgba(255,255,255,.7);padding:var(--sp-9) 0 var(--sp-6)}
 .foot-top{display:flex;justify-content:space-between;gap:var(--sp-7);flex-wrap:wrap;
   padding-bottom:var(--sp-7);border-bottom:1px solid rgba(255,255,255,.08)}
@@ -703,7 +727,6 @@ footer{background:var(--night);color:rgba(255,255,255,.7);padding:var(--sp-9) 0 
     <li><a href="#vision">Vision</a></li>
     <li><a href="#ecosystem">Ecosystem</a></li>
     <li><a href="#xr">XR</a></li>
-    <li><a href="#business">Business</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
   </ul>
   <div class="nav-cta">
@@ -1134,50 +1157,6 @@ footer{background:var(--night);color:rgba(255,255,255,.7);padding:var(--sp-9) 0 
   </div>
 </section>
 
-<!-- ==================== BUSINESS MODEL ==================== -->
-<section class="pad" id="business" style="background:var(--bg-soft)">
-  <div class="wrap">
-    <div class="shead reveal">
-      <span class="eyebrow c"><span class="ed"></span> Business Model</span>
-      <h2>Sustainable <span class="gtxt">open source</span></h2>
-      <p>Free for individuals, forever. Revenue comes from enterprise features, cloud compute
-      and a thriving marketplace — never from locking anyone in.</p>
-    </div>
-    <div class="biz-grid">
-      <div class="biz-card reveal-l" data-tilt style="--i:0">
-        <div class="biz-ic">&#x1f30d;</div><h3>Open Core Model</h3>
-        <p>The entire platform core is open source. Anyone can self-host, modify and contribute.</p>
-        <ul><li>Full modelling &amp; analysis — free</li><li>Community-driven development</li><li>Transparent governance</li></ul>
-      </div>
-      <div class="biz-card reveal-z" data-tilt style="--i:1">
-        <div class="biz-ic">&#x1f3e2;</div><h3>Enterprise Cloud (SaaS)</h3>
-        <p>Managed cloud with enterprise SLA, SSO, access control and priority support.</p>
-        <ul><li>&#36;25–75 / user / month tiers</li><li>Managed infrastructure</li><li>99.9% uptime SLA</li></ul>
-      </div>
-      <div class="biz-card reveal-r" data-tilt style="--i:2">
-        <div class="biz-ic">&#x26a1;</div><h3>Compute Credits</h3>
-        <p>Pay-as-you-go for heavy operations — structural FEM, clash detection, AI and rendering.</p>
-        <ul><li>Usage-based pricing</li><li>Burst capacity on demand</li><li>GPU-accelerated workers</li></ul>
-      </div>
-      <div class="biz-card reveal-l" data-tilt style="--i:0">
-        <div class="biz-ic">&#x1f6d2;</div><h3>Plugin Marketplace</h3>
-        <p>Third-party developers publish modules with an 80/20 revenue share in their favour.</p>
-        <ul><li>Certified plugin program</li><li>Regional &amp; code modules</li><li>Domain-specific add-ons</li></ul>
-      </div>
-      <div class="biz-card reveal-z" data-tilt style="--i:1">
-        <div class="biz-ic">&#x1f393;</div><h3>Training &amp; Certification</h3>
-        <p>Accredited OpenBIM training with certifications recognised by buildingSMART.</p>
-        <ul><li>Self-paced online courses</li><li>Enterprise training programs</li><li>University partnerships</li></ul>
-      </div>
-      <div class="biz-card reveal-r" data-tilt style="--i:2">
-        <div class="biz-ic">&#x1f527;</div><h3>Professional Services</h3>
-        <p>Custom development, migration assistance and implementation consulting.</p>
-        <ul><li>Custom integrations</li><li>Legacy data migration</li><li>Dedicated engineers</li></ul>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ==================== USE CASES ==================== -->
 <section class="pad" id="usecases">
   <div class="wrap">
@@ -1247,14 +1226,14 @@ footer{background:var(--night);color:rgba(255,255,255,.7);padding:var(--sp-9) 0 
           <div class="f"><span class="ck">&#x2713;</span>Communication Hub (5 users)</div>
           <div class="f"><span class="ck">&#x2713;</span>Basic AI suggestions</div>
           <div class="f"><span class="ck">&#x2713;</span>WebXR VR viewer</div>
-          <div class="f"><span class="ck">&#x2713;</span>3 projects / 5 GB storage</div>
+          <div class="f"><span class="ck">&#x2713;</span>3 projects / 2 GB storage</div>
           <div class="f"><span class="ck">&#x2713;</span>Self-hosted — unlimited</div>
         </div>
       </div>
       <div class="lvl-card ent reveal-r">
         <span class="lvl-badge">Enterprise / Organization</span>
         <h3>For teams &amp; companies</h3>
-        <div class="lvl-price">&#36;25–75 <small>/ user / month</small></div>
+        <div class="lvl-price">&#36;&#36;&#36; <small>/ user / month</small></div>
         <p>Everything in Individual plus advanced collaboration, governance, compute, XR, digital twin and a full ERP.</p>
         <div class="lvl-feat">
           <div class="f"><span class="ck">&#x2713;</span>Everything in Individual</div>
@@ -1296,10 +1275,26 @@ footer{background:var(--night);color:rgba(255,255,255,.7);padding:var(--sp-9) 0 
   <div class="wrap">
     <div class="cta-band reveal-z">
       <div class="cta-grid"></div>
+      <span class="cta-pill"><span class="cta-dot"></span> MVP releasing &mdash; September 2026</span>
       <h2>Build the future of AEC<br>in your browser</h2>
-      <p>One open ecosystem. Every capability. No installs, no lock-in, no limits.</p>
+      <p>One open ecosystem. Every capability. No installs, no lock-in, no limits.<br>
+      Want early access? Drop your email and we&rsquo;ll be in touch when the MVP goes live.</p>
+      <!-- Google Forms backend -> appends a row to the linked "TOBiE Signups"
+           sheet and emails ajay@zerobim.eu (when notifications are enabled). -->
+      <form class="cta-signup" id="tobieSignup"
+            action="https://docs.google.com/forms/d/e/1FAIpQLScxbVd4sd7cXABXY3sYY7_51TARETW_MhuyZPW6Bq-oqJlo3A/formResponse"
+            method="POST" target="tobie_signup_sink">
+        <!-- Honeypot: bots fill every field, humans don't see it. -->
+        <input type="text" name="tobie_hp" style="position:absolute;left:-9999px" tabindex="-1" autocomplete="off">
+        <input type="email" name="entry.1686006701" required placeholder="you@company.com"
+               autocomplete="email" aria-label="Email address">
+        <button type="submit" class="btn btn-light">Sign up <span class="arw">&rarr;</span></button>
+      </form>
+      <!-- Hidden iframe receives Google's response so the page doesn't navigate away. -->
+      <iframe name="tobie_signup_sink" style="display:none" aria-hidden="true" tabindex="-1"></iframe>
+      <p class="cta-note" id="signupNote" hidden>Thanks! We&rsquo;ll reach out when the MVP is live.</p>
       <div class="hero-cta">
-        <a href="#top" class="btn btn-light">Start with TOBiE <span class="arw">&rarr;</span></a>
+        <a href="#top" class="btn btn-outline">Start with TOBiE <span class="arw">&rarr;</span></a>
         <a href="#stack" class="btn btn-outline">Re-enter the ecosystem</a>
       </div>
     </div>
@@ -1327,7 +1322,7 @@ footer{background:var(--night);color:rgba(255,255,255,.7);padding:var(--sp-9) 0 
         <div class="foot-col">
           <h5>Resources</h5>
           <a href="#problem">The Problem</a><a href="#replaces">What it Replaces</a>
-          <a href="#business">Business Model</a><a href="#roadmap">Roadmap</a>
+          <a href="#roadmap">Roadmap</a>
         </div>
         <div class="foot-col">
           <h5>Standards</h5>
@@ -2086,6 +2081,28 @@ function boot(){
 }
 if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
 else boot();
+})();
+</script>
+
+<!-- ============================================================ EARLY-ACCESS SIGNUP
+     Submits to a Google Form. The hidden iframe absorbs the response
+     so the page never navigates. Honeypot blocks naive bots.
+============================================================ -->
+<script>
+(function(){
+  var form = document.getElementById('tobieSignup');
+  var note = document.getElementById('signupNote');
+  if(!form) return;
+  form.addEventListener('submit', function(e){
+    // If the honeypot was filled, silently drop the submission (bot).
+    var hp = form.querySelector('input[name="tobie_hp"]');
+    if(hp && hp.value){ e.preventDefault(); return; }
+    // Let the form POST normally to the hidden iframe; show thank-you immediately.
+    setTimeout(function(){
+      form.reset();
+      if(note){ note.hidden = false; }
+    }, 250);
+  });
 })();
 </script>
 
